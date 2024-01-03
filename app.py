@@ -1,25 +1,23 @@
-from aiohttp import web
+import http.server
+import socketserver
 
+# Set the port you want to use
+class MyHandler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == '/':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(b'Hello, this is a custom endpoint!')
+        else:
+            # For any other requests, use the default handler
+            super().do_GET()
 
-routes = web.RouteTableDef()
+# Set the port you want to use
+PORT = 8000
 
-def web_server():
-    web_app = web.Application(client_max_size=30000000)
-    web_app.add_routes(routes)
-    return web_app
-
-app = web.AppRunner(web_server())
-
-
-
-async def handle(request):
-    return web.Response(text="Hello, World!")
-
-app.router.add_get('/', handle)
-
-app.setup()
-bind_address = "0.0.0.0" 
-web.TCPSite(app, bind_address,5001).start()
-
-if __name__ == '__main__':
-    web.run_app(app)
+# Create the server with the specified port and custom handler
+with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+    print(f"Serving on port {PORT}")
+    # Start the server
+    httpd.serve_forever()
