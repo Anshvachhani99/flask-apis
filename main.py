@@ -18,3 +18,4 @@ def data():
         if timezone
         else {"ok": "error", "error": "No timezone provided"}
     )
+app.run()
