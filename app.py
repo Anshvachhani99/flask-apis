@@ -14,7 +14,7 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
             super().do_GET()
 
 # Set the port you want to use
-PORT = 8000
+PORT = 8080
 
 # Create the server with the specified port and custom handler
 with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
