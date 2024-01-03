@@ -18,4 +18,4 @@ def data():
         if timezone
         else {"ok": "error", "error": "No timezone provided"}
     )
-app.run(port=5001)
+app.run()
