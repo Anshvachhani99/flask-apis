@@ -18,3 +18,6 @@ def data():
         if timezone
         else {"ok": "error", "error": "No timezone provided"}
     )
+
+if '__name__' == '__main__':
+   app.run()
